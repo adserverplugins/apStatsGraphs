@@ -1,7 +1,7 @@
 <?php
 
 /**
- * apGlobalHistoryGraph for the OpenX ad server (Free Version).
+ * apStatsGraphs for the OpenX ad server (Free Version).
  *
  * @author Matteo Beccati
  * @copyright 2009 AdserverPlugins.com
@@ -67,7 +67,7 @@ $oStatsController->start();
 
 
 // Display the OpenX page header
-phpAds_PageHeader("apGlobalHistoryGraphUI", '', '../../');
+phpAds_PageHeader("apStatsGraphsUI", '', '../../');
 
 ?>
 
