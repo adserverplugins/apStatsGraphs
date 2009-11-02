@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet type="text/xsl" href=""?>
+
+<plugin>
+    <name>apGlobalHistoryGraph</name>
+    <creationDate>2009-11-02</creationDate>
+    <author>AdserverPlugins.com</author>
+    <authorEmail>info@adserverplugins.com</authorEmail>
+    <authorUrl>http://www.adserverplugins.com/</authorUrl>
+    <license>TBD</license>
+    <description>Display OpenX statistics as graphs - Free Version</description>
+    <version>0.8.2-beta</version>
+    <oxversion>2.8.0</oxversion>
+    <type>extension</type>
+    <install>
+        <files>
+        </files>
+        <contents>
+            <group name="apGlobalHistoryGraphUI">1</group>
+        </contents>
+    </install>
+    <readme>
+    </readme>
+</plugin>
