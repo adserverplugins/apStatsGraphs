@@ -30,7 +30,7 @@ $oEnd = new Date();
 $oStart->setYear($oStart->getYear() - 1);
 
 $_REQUEST = array(
-    'period_preset'  => 'custom',
+    'period_preset'  => 'specific',
     'period_start'   => $oStart->format('%Y-%m-%d'),
     'period_end'     => $oEnd->format('%Y-%m-%d'),
     'listorder'      => 'day',
