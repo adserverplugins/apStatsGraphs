@@ -35,8 +35,6 @@ $_REQUEST = array(
     'period_end'     => $oEnd->format('%Y-%m-%d'),
     'listorder'      => 'day',
     'orderdirection' => 'up',
-//    'listorder'      => 'month',
-//    'statsBreakdown' => 'month',
 );
 
 // Prepare the parameters for display or export to XLS
@@ -75,6 +73,10 @@ phpAds_PageHeader("apStatsGraphsUI", '', '../../');
     Please wait... chart is loading
 </div>
 
+<div style="text-align: right; margin: 4px 16px">
+    This free plugin was created by the <a href="http://www.adserverplugins.com" target="_blank">AdServerPlugins.com</a> team
+</div>
+
 <?php
 
 $aData = $oStatsController->exportArray();
@@ -96,12 +98,6 @@ $aData = $oStatsController->exportArray();
     $counter = 0;
     foreach ($aData['data'] as $row) {
         list($d, $m, $y) = array_map('intval', explode('-', $row[0]));
-//        $t = mktime(0, 0, 0, $m, 1, $y);
-//        if ($t > time()) {
-//            $d = date('d');
-//        } else {
-//            $d = date('t', $t);
-//        }
         $m--; // JS months are 0-indexed
         echo "        data.setValue($counter, 0, new Date({$y}, {$m}, {$d}));\n";
         echo "        data.setValue($counter, 1, {$row[1]});\n";
@@ -114,7 +110,8 @@ $aData = $oStatsController->exportArray();
         chart.draw(data, {
             'scaleColumns': [0, 1],
             'scaleType': 'allfixed',
-            'thickness': 2,
+            'thickness': 3,
+            'colors': ['#0066ff', '#009900'],
             'wmode': 'opaque'
         });
     }
