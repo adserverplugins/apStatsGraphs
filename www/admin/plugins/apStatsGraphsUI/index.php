@@ -5,7 +5,7 @@
  *
  * @author Matteo Beccati
  * @copyright 2009 AdserverPlugins.com
- * @license TBD
+ * @license http://creativecommons.org/licenses/by-nd/3.0/
  */
 
 // Prepare the OpenX environment via standard external OpenX scripts
