@@ -259,7 +259,7 @@ class AP_Graph
         $oTooltip = new tooltip('#val#');
         $oTooltip->set_body_style('font-size: 10px');
         $oTooltip->set_stroke(1);
-        $oTooltip->set_shadow(false);
+        $oTooltip->set_shadow(true);
         $oTooltip->set_background_colour('#ffffcc');
         $oTooltip->set_colour('#cccc99');
         $oChart->set_tooltip($oTooltip);
