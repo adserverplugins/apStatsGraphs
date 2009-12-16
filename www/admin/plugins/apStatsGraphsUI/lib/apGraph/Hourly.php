@@ -40,14 +40,16 @@ class AP_Graph_Hourly extends AP_Graph
         if (empty($lastRow)) {
             for ($i = 0; $i <= 23; $i++) {
                 $this->aData[0][] = sprintf('%02d:00 - %02d:59', $i, $i);
-                $this->aData[1][] = $this->aData[2][] = 0;
+                for ($j = 1; $j < count($this->aData); $j++) {
+                    $this->aData[$j][] = null;
+                }
             }
         }
     }
 
     protected function getTitle()
     {
-        return 'Hourly Stats - '.$this->oStart->format($GLOBALS['date_format']);
+        return 'Hourly Stats: '.$this->oStart->format($GLOBALS['date_format']);
     }
 
 }

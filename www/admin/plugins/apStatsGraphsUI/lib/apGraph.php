@@ -18,11 +18,10 @@ class AP_Graph
         0 => array(),
         1 => array(),
         2 => array(),
+        3 => array(),
     );
-    protected $aLabels = array(
-        1 => '',
-        2 => '',
-    );
+    protected $aTooltips;
+    protected $aLabels;
 
     public function __construct($oStart, $oEnd)
     {
@@ -95,6 +94,8 @@ class AP_Graph
         $GLOBALS['_MAX']['PREF']['ui_column_impressions_rank'] = 1;
         $GLOBALS['_MAX']['PREF']['ui_column_clicks'] = true;
         $GLOBALS['_MAX']['PREF']['ui_column_clicks_rank'] = 2;
+        $GLOBALS['_MAX']['PREF']['ui_column_ctr'] = true;
+        $GLOBALS['_MAX']['PREF']['ui_column_ctr_rank'] = 3;
 
         // Prepare the stats controller, and populate with the stats
         $oStatsController = OA_Admin_Statistics_Factory::getController('global-history', $aParams);
@@ -134,6 +135,13 @@ class AP_Graph
 
         $this->aLabels = $aData['headers'];
 
+        for ($i = 1; $i < count($aData['headers']); $i++) {
+            $this->aTooltips[$i] = "{$aData['headers'][$i]}: #val#";
+            if ($aData['formats'][$i] == 'percent') {
+                $this->aTooltips[$i] .= '%';
+            }
+        }
+
         if (count($aData['data'])) {
             $this->padBefore(current($aData['data']));
         }
@@ -141,9 +149,17 @@ class AP_Graph
         foreach ($aData['data'] as $row) {
             $this->aData[0][] = $row[0];
 
-            for ($i = 1; $i <= 2; $i++) {
-                $row[$i] = (int)$row[$i];
-                $this->aData[$i][] = $row[$i];
+            for ($i = 1; $i < count($aData['headers']); $i++) {
+                if (!empty($row[$i])) {
+                    if ($aData['formats'][$i] == 'percent') {
+                        $row[$i] = (float)round($row[$i] * 100, 2);
+                    } else {
+                        $row[$i] = (float)$row[$i];
+                    }
+                    $this->aData[$i][] = $row[$i];
+                } else {
+                    $this->aData[$i][] = null;
+                }
             }
         }
 
@@ -155,12 +171,20 @@ class AP_Graph
         return '';
     }
 
-    protected function getSeries($idx, $colour)
+    protected function getSeries($idx, $type, $colour)
     {
-        $oSeries = new bar_glass();
+        $oSeries = new $type();
         $oSeries->set_values($this->aData[$idx]);
         $oSeries->set_key($this->aLabels[$idx], 10);
         $oSeries->set_colour($colour);
+
+        if ($type == 'line') {
+            $dot = new dot();
+            $dot->colour($colour)->tooltip($this->aTooltips[$idx]);
+            $oSeries->set_default_dot_style($dot);
+        } else {
+            $oSeries->set_tooltip($this->aTooltips[$idx]);
+        }
 
         return $oSeries;
     }
@@ -188,6 +212,31 @@ class AP_Graph
         $oY->set_range($min, $i, $i / 10);
     }
 
+    private function remapSeries($oY, $idx, $scale = 1)
+    {
+        $maxY = $oY->max;
+
+        $max = 0;
+        foreach ($this->aData[$idx] as $v) {
+            $v = (float)$v;
+            if ($v > $max) {
+                $max = $v;
+            }
+        }
+
+        foreach ($this->aData[$idx] as $k => $v) {
+            if (isset($v)) {
+                if (!$max) {
+                    $this->aData[$idx][$k] = 0;
+                } else {
+                    $oValue = new dot((float)$v / $max * $maxY * $scale);
+                    $oValue->tooltip(str_replace('#val#', $v, $this->aTooltips[$idx]));
+                    $this->aData[$idx][$k] = $oValue;
+                }
+            }
+        }
+    }
+
     private function getChart($aGraphs)
     {
         $this->prepareData();
@@ -202,27 +251,36 @@ class AP_Graph
 
         $oChart = new open_flash_chart();
         $oChart->set_bg_colour('#FFFFFF');
-        $oChart->set_title(new title($this->getTitle()));
+
+        $oTitle = new title($this->getTitle());
+        $oTitle->set_style('font-size: 12px; font-weight: bold;');
+        $oChart->set_title($oTitle);
 
         $aY = array();
 
         foreach ($aGraphs as $k => $v) {
             $y = empty($v['y-right']) ? 0 : 1;
+            $scale = empty($v['scale']) ? 1 : $v['scale'];
 
             if (!isset($aY[$y])) {
                 $aY[$y] = new y_axis();
                 $aY[$y]->set_colours($v['colour'], '#f6f6f6');
             }
-            $this->setAxisRange($aY[$y], $k, empty($v['scale']) ? 1 : $v['scale']);
 
-            $oSeries = $this->getSeries($k, $v['colour']);
+            if (empty($v['y-remap'])) {
+                $this->setAxisRange($aY[$y], $k, $scale);
+            } else {
+                $this->remapSeries($aY[$y], $k, $scale);
+            }
+
+            $oSeries = $this->getSeries($k, $v['type'], $v['colour']);
             $oSeries->set_on_show($v['effect']);
             if ($y) {
                 $oSeries->attach_to_right_y_axis();
             }
-            $aCharts[] = $oSeries;
+            $aGraphs[$k] = $oSeries;
         }
-        
+
         $oChart->set_x_axis($oX);
 
         foreach ($aY as $y => $e) {
@@ -240,14 +298,23 @@ class AP_Graph
     {
         $oChart = $this->getChart(array(
             1 => array(
+                'type'    => 'bar_glass',
                 'colour'  => '#0033cc',
-                'effect'  => new bar_on_show('grow-up', 0.5, 0.2),
+                'effect'  => new bar_on_show('grow-up', 1, 0.25),
             ),
             2 => array(
+                'type'    => 'bar_glass',
                 'colour'  => '#009900',
-                'effect'  => new bar_on_show('grow-up', 0.5, 0.2),
+                'effect'  => new bar_on_show('grow-up', 1, 0.25),
                 'y-right' => true,
-                'scale'   => 0.5,
+                'scale'   => 0.67,
+            ),
+            3 => array(
+                'type'    => 'line',
+                'colour'  => '#cc3333',
+                'effect'  => new bar_on_show('pop-up', 1, 0.25),
+                'y-remap' => true,
+                'scale'   => 0.33,
             ),
         ));
 

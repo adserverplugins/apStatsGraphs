@@ -63,7 +63,9 @@ EOF;
                 $this->oStart->getMonth(),
                 $i
             );
-            $this->aData[1][] = $this->aData[2][] = 0;
+            for ($j = 1; $j < count($this->aData); $j++) {
+                $this->aData[$j][] = null;
+            }
         }
     }
 
@@ -77,20 +79,22 @@ EOF;
                 $this->oStart->getMonth(),
                 $i
             );
-            $this->aData[1][] = $this->aData[2][] = 0;
+            for ($j = 1; $j < count($this->aData); $j++) {
+                $this->aData[$j][] = null;
+            }
         }
     }
 
-    protected function getSeries($type, $key, $colour)
+    protected function getSeries($idx, $type, $colour)
     {
-        $oSeries = parent::getSeries($type, $key, $colour);
+        $oSeries = parent::getSeries($idx, $type, $colour);
         $oSeries->set_on_click('drill_down');
         return $oSeries;
     }
 
     protected function getTitle()
     {
-        return 'Daily Stats - '.$this->oStart->format($GLOBALS['month_format']);
+        return 'Daily Stats: '.$this->oStart->format($GLOBALS['month_format']);
     }
 
 }

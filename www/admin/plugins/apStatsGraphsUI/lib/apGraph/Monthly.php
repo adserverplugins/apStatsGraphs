@@ -3,7 +3,7 @@
 class AP_Graph_Monthly extends AP_Graph
 {
     protected $breakDown = 'month';
-    
+
     static function factory($year)
     {
         $oStart = new Date(sprintf('%04d-%02d-%02d', $year, 1, 1));
@@ -58,7 +58,9 @@ EOF;
         $month = (int)substr($row[0], 5);
         for ($i = 1; $i < $month; $i++) {
             $this->aData[0][] = sprintf('%04d-%02d', $this->oStart->getYear(), $i);
-            $this->aData[1][] = $this->aData[2][] = 0;
+            for ($j = 1; $j < count($this->aData); $j++) {
+                $this->aData[$j][] = null;
+            }
         }
     }
 
@@ -67,20 +69,22 @@ EOF;
         $i = 1 + (int)substr($lastRow[0], 5);
         for (; $i <= 12; $i++) {
             $this->aData[0][] = sprintf('%04d-%02d', $this->oStart->getYear(), $i);
-            $this->aData[1][] = $this->aData[2][] = 0;
+            for ($j = 1; $j < count($this->aData); $j++) {
+                $this->aData[$j][] = null;
+            }
         }
     }
 
-    protected function getSeries($type, $key, $colour)
+    protected function getSeries($idx, $type, $colour)
     {
-        $oSeries = parent::getSeries($type, $key, $colour);
+        $oSeries = parent::getSeries($idx, $type, $colour);
         $oSeries->set_on_click('drill_down');
         return $oSeries;
     }
 
     protected function getTitle()
     {
-        return 'Monthly Stats - '.$this->oStart->getYear();
+        return 'Monthly Stats: '.$this->oStart->getYear();
     }
 
 }
