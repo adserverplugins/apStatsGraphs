@@ -220,6 +220,9 @@ class AP_Graph
 
             $oSeries = $this->getSeries($k, $v['colour']);
             $oSeries->set_on_show($v['effect']);
+            if ($y) {
+                $oSeries->attach_to_right_y_axis();
+            }
             $oChart->add_element($oSeries);
         }
 
