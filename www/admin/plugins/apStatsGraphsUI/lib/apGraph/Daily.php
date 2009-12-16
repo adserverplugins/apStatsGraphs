@@ -93,4 +93,13 @@ EOF;
         return 'Daily Stats - '.$this->oStart->format($GLOBALS['month_format']);
     }
 
+    protected function getToday($oY)
+    {
+        $oNow = new Date();
+        if ($this->oStart->format('%Y-%m') == $oNow->format('%Y-%m')) {
+            return parent::getToday($oY, $oNow->getDay());
+        }
+
+        return false;
+    }
 }

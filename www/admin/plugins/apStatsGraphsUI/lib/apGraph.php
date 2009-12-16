@@ -127,16 +127,6 @@ class AP_Graph
     {
     }
 
-    protected function getSeries($idx, $colour)
-    {
-        $oSeries = new bar_glass();
-        $oSeries->set_values($this->aData[$idx]);
-        $oSeries->set_key($this->aLabels[$idx]);
-        $oSeries->set_colour($colour);
-
-        return $oSeries;
-    }
-
     private function prepareData()
     {
         $oStatsController = $this->getController();
@@ -163,6 +153,31 @@ class AP_Graph
     protected function getTitle()
     {
         return '';
+    }
+
+    protected function getToday($oY, $x = null)
+    {
+        if (isset($x) && $oY instanceof y_axis_base) {
+            $offset = ($oY->max - $oY-min) * 0.025;
+            $oToday = new shape('#ffddbb');
+            $oToday->append_value(new shape_point($x - 1.5, $oY->min - $offset));
+            $oToday->append_value(new shape_point($x - 1.5, $oY->max + $offset));
+            $oToday->append_value(new shape_point($x - 0.5, $oY->max + $offset));
+            $oToday->append_value(new shape_point($x - 0.5, $oY->min - $offset));
+            return $oToday;
+        }
+
+        return false;
+    }
+
+    protected function getSeries($idx, $colour)
+    {
+        $oSeries = new bar_glass();
+        $oSeries->set_values($this->aData[$idx]);
+        $oSeries->set_key($this->aLabels[$idx], 10);
+        $oSeries->set_colour($colour);
+
+        return $oSeries;
     }
 
     private function setAxisRange($oY, $idx, $scale = 1)
@@ -203,18 +218,15 @@ class AP_Graph
         $oChart = new open_flash_chart();
         $oChart->set_bg_colour('#FFFFFF');
         $oChart->set_title(new title($this->getTitle()));
-        $oChart->set_x_axis($oX);
 
         $aY = array();
 
         foreach ($aGraphs as $k => $v) {
             $y = empty($v['y-right']) ? 0 : 1;
 
-            if (!isset($aY[$v['y-axis']])) {
+            if (!isset($aY[$y])) {
                 $aY[$y] = new y_axis();
                 $aY[$y]->set_colours($v['colour'], '#f6f6f6');
-                $method = $y ? 'set_y_axis_right' : 'set_y_axis';
-                $oChart->$method($aY[$y]);
             }
             $this->setAxisRange($aY[$y], $k, empty($v['scale']) ? 1 : $v['scale']);
 
@@ -223,7 +235,22 @@ class AP_Graph
             if ($y) {
                 $oSeries->attach_to_right_y_axis();
             }
-            $oChart->add_element($oSeries);
+            $aCharts[] = $oSeries;
+        }
+        
+        $oToday = $this->getToday($aY[0]);
+        if ($oToday) {
+            $oChart->add_element($oToday);
+        }
+
+        $oChart->set_x_axis($oX);
+
+        foreach ($aY as $y => $e) {
+            $method = $y ? 'set_y_axis_right' : 'set_y_axis';
+            $oChart->$method($e);
+        }
+        foreach ($aGraphs as $e) {
+            $oChart->add_element($e);
         }
 
         return $oChart;
@@ -233,14 +260,14 @@ class AP_Graph
     {
         $oChart = $this->getChart(array(
             1 => array(
-                'colour'  => '#0000cc',
+                'colour'  => '#0033cc',
                 'effect'  => new bar_on_show('grow-up', 0.5, 0.2),
             ),
             2 => array(
                 'colour'  => '#009900',
                 'effect'  => new bar_on_show('grow-up', 0.5, 0.2),
                 'y-right' => true,
-                'scale'   => 0.75,
+                'scale'   => 0.5,
             ),
         ));
 

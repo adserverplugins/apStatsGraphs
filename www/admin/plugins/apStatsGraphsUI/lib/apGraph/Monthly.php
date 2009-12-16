@@ -83,4 +83,15 @@ EOF;
         return 'Monthly Stats - '.$this->oStart->getYear();
     }
 
+    protected function getToday($oY)
+    {
+        $oNow = new Date();
+        if ($this->oStart->getYear() == $oNow->getYear()) {
+            return parent::getToday($oY, $oNow->getMonth());
+        }
+
+        return false;
+    }
+
+
 }
