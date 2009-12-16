@@ -27,7 +27,7 @@ class AP_Graph
     public function __construct($oStart, $oEnd)
     {
         $oNow = new Date();
-        
+
         $this->oStart    = $oNow->before($oStart) ? $oNow : $oStart;
         $this->oEnd      = $oNow->before($oEnd)   ? $oNow : $oEnd;
     }
@@ -48,7 +48,7 @@ class AP_Graph
             $aParams = array(date('Y'), date('m'));
         }
 
-        require_once "./{$breakDown}.php";
+        require_once dirname(__FILE__)."/apGraph/{$breakDown}.php";
         return call_user_func_array(array('AP_Graph_'.$breakDown, 'factory'), $aParams);
     }
 
@@ -153,7 +153,7 @@ class AP_Graph
 
             for ($i = 1; $i <= 2; $i++) {
                 $row[$i] = (int)$row[$i];
-                $this->aData[$i][] = $row[1];
+                $this->aData[$i][] = $row[$i];
             }
         }
 
@@ -212,12 +212,12 @@ class AP_Graph
 
             if (!isset($aY[$v['y-axis']])) {
                 $aY[$y] = new y_axis();
-                $aY[$y]->set_colour($v['colour']);
+                $aY[$y]->set_colours($v['colour'], '#f6f6f6');
                 $method = $y ? 'set_y_axis_right' : 'set_y_axis';
                 $oChart->$method($aY[$y]);
             }
             $this->setAxisRange($aY[$y], $k, empty($v['scale']) ? 1 : $v['scale']);
-            
+
             $oSeries = $this->getSeries($k, $v['colour']);
             $oSeries->set_on_show($v['effect']);
             $oChart->add_element($oSeries);
@@ -234,7 +234,7 @@ class AP_Graph
                 'effect'  => new bar_on_show('grow-up', 0.5, 0.2),
             ),
             2 => array(
-                'colour'  => '#0000cc',
+                'colour'  => '#009900',
                 'effect'  => new bar_on_show('grow-up', 0.5, 0.2),
                 'y-right' => true,
                 'scale'   => 0.75,
