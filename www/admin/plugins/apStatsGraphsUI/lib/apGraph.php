@@ -155,21 +155,6 @@ class AP_Graph
         return '';
     }
 
-    protected function getToday($oY, $x = null)
-    {
-        if (isset($x) && $oY instanceof y_axis_base) {
-            $offset = ($oY->max - $oY-min) * 0.025;
-            $oToday = new shape('#ffddbb');
-            $oToday->append_value(new shape_point($x - 1.5, $oY->min - $offset));
-            $oToday->append_value(new shape_point($x - 1.5, $oY->max + $offset));
-            $oToday->append_value(new shape_point($x - 0.5, $oY->max + $offset));
-            $oToday->append_value(new shape_point($x - 0.5, $oY->min - $offset));
-            return $oToday;
-        }
-
-        return false;
-    }
-
     protected function getSeries($idx, $colour)
     {
         $oSeries = new bar_glass();
@@ -238,11 +223,6 @@ class AP_Graph
             $aCharts[] = $oSeries;
         }
         
-        $oToday = $this->getToday($aY[0]);
-        if ($oToday) {
-            $oChart->add_element($oToday);
-        }
-
         $oChart->set_x_axis($oX);
 
         foreach ($aY as $y => $e) {
