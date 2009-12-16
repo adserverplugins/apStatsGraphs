@@ -11,12 +11,66 @@
         <a href="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons Attribution-No Derivative Works 3.0 Unported</a>
     ]]></license>
     <description>Display OpenX statistics as graphs - Free Version</description>
-    <version>0.9.0-beta</version>
+    <version>0.9.7-beta</version>
     <oxversion>2.8.0</oxversion>
     <extends>admin</extends>
     <install>
         <files>
             <file path="{ADMINPATH}/">index.php</file>
+            <file path="{ADMINPATH}/">graph-data.php</file>
+            <file path="{ADMINPATH}/lib/">apGraph.php</file>
+            <file path="{ADMINPATH}/lib/apGraph/">Daily.php</file>
+            <file path="{ADMINPATH}/lib/apGraph/">Hourly.php</file>
+            <file path="{ADMINPATH}/lib/apGraph/">Monthly.php</file>
+
+            <file path="{ADMINPATH}/">open-flash-chart.swf</file>
+            <file path="{ADMINPATH}/js/">swfobject.js</file>
+            <file path="{ADMINPATH}/lib/">JSON.php</file>
+            <file path="{ADMINPATH}/lib/">dot_base.php</file>
+            <file path="{ADMINPATH}/lib/">json_format.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_area_base.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_area_hollow.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_area_line.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_arrow.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_bar.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_bar_3d.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_bar_base.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_bar_filled.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_bar_glass.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_bar_sketch.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_bar_stack.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_candle.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_hbar.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_line.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_line_base.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_line_dot.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_line_hollow.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_line_style.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_menu.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_pie.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_radar_axis.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_radar_axis_labels.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_radar_spoke_labels.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_scatter.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_scatter_line.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_shape.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_sugar.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_tags.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_title.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_tooltip.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_upload_image.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_x_axis.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_x_axis_label.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_x_axis_labels.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_x_legend.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_y_axis.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_y_axis_base.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_y_axis_label.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_y_axis_labels.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_y_axis_right.php</file>
+            <file path="{ADMINPATH}/lib/">ofc_y_legend.php</file>
+            <file path="{ADMINPATH}/lib/">open-flash-chart-object.php</file>
+            <file path="{ADMINPATH}/lib/">open-flash-chart.php</file>
         </files>
         <navigation>
             <admin>

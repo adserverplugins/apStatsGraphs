@@ -1,0 +1,21 @@
+
+apStatsGraphs
+=============
+OpenX Ad Server has on-screen reports that display the statistics for
+advertisers, campaigns, websites, and zones, and an overall report that shows
+"global history". This free plugin adds a new item to the Statistics section,
+that displays the global history statistics in the form of a drill-down graph.
+
+Licence
+=======
+This plugin has been released under the Creative Commons Attribution-NoDerivs
+licence, version 3.0 Unported. Human readable summary and full legal code are
+available at:
+
+http://creativecommons.org/licenses/by-nd/3.0/
+
+Exceptions
+==========
+This plugin includes code from Open Flash Chart 2, released under LGPL:
+
+http://teethgrinder.co.uk/open-flash-chart-2/

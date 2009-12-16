@@ -11,15 +11,19 @@
         <a href="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons Attribution-No Derivative Works 3.0 Unported</a>
     ]]></license>
     <description>Display OpenX statistics as graphs - Free Version</description>
-    <version>0.9.0-beta</version>
+    <version>0.9.7-beta</version>
     <oxversion>2.8.0</oxversion>
     <type>extension</type>
     <install>
+
         <files>
+            <file path="{PLUGINPATH}">apStatsGraphs.readme.txt</file>
         </files>
+
         <contents>
             <group name="apStatsGraphsUI">1</group>
         </contents>
+
     </install>
     <readme>
     </readme>
