@@ -4,11 +4,11 @@ class AP_Graph_Daily extends AP_Graph
 {
     protected $breakDown = 'day';
 
-    static function factory($year, $month)
+    static function factory($year, $month, $aEntityParams)
     {
         $oStart = new Date(sprintf('%04d-%02d-%02d', $year, $month, 1));
         $oEnd   = new Date(sprintf('%04d-%02d-%02d', $year, $month, $oStart->getDaysInMonth()));
-        return new AP_Graph_Daily($oStart, $oEnd);
+        return new AP_Graph_Daily($oStart, $oEnd, $aEntityParams);
     }
 
     public function getUrl()

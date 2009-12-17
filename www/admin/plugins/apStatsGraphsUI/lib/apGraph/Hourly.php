@@ -4,11 +4,11 @@ class AP_Graph_Hourly extends AP_Graph
 {
     protected $breakDown = 'hour';
 
-    static function factory($year, $month, $day)
+    static function factory($year, $month, $day, $aEntityParams)
     {
         $oStart = new Date(sprintf('%04d-%02d-%02d', $year, $month, $day));
         $oEnd   = new Date(sprintf('%04d-%02d-%02d', $year, $month, $day));
-        return new AP_Graph_Hourly($oStart, $oEnd);
+        return new AP_Graph_Hourly($oStart, $oEnd, $aEntityParams);
     }
 
     public function getUrl()

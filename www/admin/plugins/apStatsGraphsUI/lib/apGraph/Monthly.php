@@ -4,11 +4,11 @@ class AP_Graph_Monthly extends AP_Graph
 {
     protected $breakDown = 'month';
 
-    static function factory($year)
+    static function factory($year, $aEntityParams)
     {
         $oStart = new Date(sprintf('%04d-%02d-%02d', $year, 1, 1));
         $oEnd   = new Date(sprintf('%04d-%02d-%02d', $year, 12, 31));
-        return new AP_Graph_Monthly($oStart, $oEnd);
+        return new AP_Graph_Monthly($oStart, $oEnd, $aEntityParams);
     }
 
     public function getUrl()

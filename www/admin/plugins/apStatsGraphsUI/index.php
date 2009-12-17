@@ -13,16 +13,16 @@ require_once '../../../../init.php';
 require_once '../../config.php';
 require_once './lib/apGraph.php';
 
-// Limit access to Admin and Manager accounts
-OA_Permission::enforceAccount(OA_ACCOUNT_ADMIN, OA_ACCOUNT_MANAGER);
+// Limit access to logged in users
+OA_Permission::enforceAccount(OA_ACCOUNT_ADMIN, OA_ACCOUNT_MANAGER, OA_ACCOUNT_ADVERTISER, OA_ACCOUNT_TRAFFICKER);
 
 // No cache
 MAX_commonSetNoCacheHeaders();
 
-// Display the OpenX page header
-phpAds_PageHeader("apStatsGraphsUI", '', '../../');
-
 $oGraph = AP_Graph::factory($_GET);
+
+// Display the OpenX page header
+phpAds_PageHeader($oGraph->getMenuIndex(), '', '../../');
 
 ?>
 

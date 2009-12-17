@@ -13,6 +13,8 @@ class AP_Graph
     protected $breakDown;
     protected $oStart;
     protected $oEnd;
+    protected $entity;
+    protected $aEntityParams = array();
 
     protected $aData = array(
         0 => array(),
@@ -23,12 +25,14 @@ class AP_Graph
     protected $aTooltips;
     protected $aLabels;
 
-    public function __construct($oStart, $oEnd)
+    public function __construct($oStart, $oEnd, $aEntityParams)
     {
         $oNow = new Date();
 
         $this->oStart    = $oNow->before($oStart) ? $oNow : $oStart;
         $this->oEnd      = $oNow->before($oEnd)   ? $oNow : $oEnd;
+
+        $this->parseEntityParams($aEntityParams);
     }
 
     static public function factory($aGet)
@@ -47,13 +51,55 @@ class AP_Graph
             $aParams = array(date('Y'), date('m'));
         }
 
+        $aParams[] = $aGet;
+
         require_once dirname(__FILE__)."/apGraph/{$breakDown}.php";
         return call_user_func_array(array('AP_Graph_'.$breakDown, 'factory'), $aParams);
     }
 
+    private function parseEntityParams($aEntityParams)
+    {
+        $aMap = array(
+            'advertiser' => array('clientid'),
+            'campaign' => array('clientid', 'campaignid'),
+            'banner' => array('clientid', 'campaignid', 'bannerid'),
+            'affiliate' => array('affiliateid'),
+            'zone' => array('affiliateid', 'zoneid'),
+        );
+
+        if (empty($aEntityParams['entity'])) {
+            $aEntityParams['entity'] = 'global';
+        }
+
+        if ($aEntityParams['entity'] != 'global') {
+            $allowed = implode('|', array_keys($aMap));
+            if (!preg_match('/^('.$allowed.')(?:-('.$allowed.'))?$/D', $aEntityParams['entity'], $aMatches)) {
+                throw new exception("Unsupported entity breakdown");
+            }
+            array_shift($aMatches);
+            $this->entity = join('-', $aMatches);
+            foreach ($aMatches as $type) {
+                foreach ($aMap[$type] as $inputVar) {
+                    $this->aEntityParams[$inputVar] = !empty($aEntityParams[$inputVar]) ? (int)$aEntityParams[$inputVar] : 0;
+                }
+            }
+        } else {
+            $this->entity = 'global';
+        }
+    }
+
+    public function getMenuIndex()
+    {
+        return 'apsg-'.$this->entity;
+    }
+
     public function getUrl()
     {
-        return 'graph-data.php?';
+        $url = 'graph-data.php?entity='.$this->entity;
+        foreach ($this->aEntityParams as $k => $v) {
+            $url .= "&{$k}={$v}";
+        }
+        return $url;
     }
 
     protected function getController()
@@ -75,6 +121,8 @@ class AP_Graph
             'listorder'      => $this->breakDown,
             'orderdirection' => 'up',
         );
+
+        $_REQUEST += $this->aEntityParams;
 
         // Prepare the parameters for display or export to XLS
         $aParams = array(
@@ -98,7 +146,7 @@ class AP_Graph
         $GLOBALS['_MAX']['PREF']['ui_column_ctr_rank'] = 3;
 
         // Prepare the stats controller, and populate with the stats
-        $oStatsController = OA_Admin_Statistics_Factory::getController('global-history', $aParams);
+        $oStatsController = OA_Admin_Statistics_Factory::getController($this->entity.'-history', $aParams);
         if (PEAR::isError($oStatsController)) {
             throw new Exception($oStatsController->getMessage());
         }
