@@ -11,10 +11,10 @@ class AP_Graph_Daily extends AP_Graph
         return new AP_Graph_Daily($oStart, $oEnd, $aEntityParams);
     }
 
-    public function getUrl()
+    public function getUrl($graph = true)
     {
         return $this->appendToUrl(
-            parent::getUrl(),
+            parent::getUrl($graph),
             'month='.$this->oStart->format('%Y-%m')
         );
     }
@@ -43,12 +43,13 @@ EOF;
         $oDate = new Date($this->oStart);
         $oNow  = new Date();
         $aLinks = array();
-        $aLinks['up'] = '?year='.$oDate->getYear();
+        $baseUrl = parent::getUrl(false);
+        $aLinks['up'] = $this->appendToUrl($baseUrl, 'year='.$oDate->getYear());
         $oDate->subtractSpan(new Date_Span('1-0-0-0'));
-        $aLinks['prev'] = '?month='.$oDate->format('%Y-%m');
+        $aLinks['prev'] = $this->appendToUrl($baseUrl, 'month='.$oDate->format('%Y-%m'));
         $oDate->addSpan(new Date_Span('34-0-0-0'));
         if ($oNow->after($oDate)) {
-            $aLinks['next'] = '?month='.$oDate->format('%Y-%m');
+            $aLinks['next'] = $this->appendToUrl($baseUrl, 'month='.$oDate->format('%Y-%m'));
         }
 
         return $aLinks;

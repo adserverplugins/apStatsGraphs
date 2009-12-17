@@ -11,10 +11,10 @@ class AP_Graph_Monthly extends AP_Graph
         return new AP_Graph_Monthly($oStart, $oEnd, $aEntityParams);
     }
 
-    public function getUrl()
+    public function getUrl($graph = true)
     {
         return $this->appendToUrl(
-            parent::getUrl(),
+            parent::getUrl($graph),
             'year='.$this->oStart->format('%Y')
         );
     }
@@ -43,11 +43,12 @@ EOF;
         $oDate = new Date($this->oStart);
         $oNow  = new Date();
         $aLinks = array();
+        $baseUrl = parent::getUrl(false);
         $year = $oDate->getYear();
-        $aLinks['prev'] = '?year='.($year - 1);
+        $aLinks['prev'] = $this->appendToUrl($baseUrl, 'year='.($year - 1));
         $oDate->setYear($year + 1);
         if ($oNow->after($oDate)) {
-            $aLinks['next'] = '?year='.($year + 1);
+            $aLinks['next'] = $this->appendToUrl($baseUrl, 'year='.($year + 1));
         }
 
         return $aLinks;

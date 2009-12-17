@@ -93,9 +93,10 @@ class AP_Graph
         return 'apsg-'.$this->entity;
     }
 
-    public function getUrl()
+    public function getUrl($graph = true)
     {
-        $url = 'graph-data.php?entity='.$this->entity;
+        $url = $graph ? 'graph-data' : 'index';
+        $url .= '.php?entity='.$this->entity;
         foreach ($this->aEntityParams as $k => $v) {
             $url .= "&{$k}={$v}";
         }
@@ -227,7 +228,7 @@ class AP_Graph
         $oSeries->set_colour($colour);
 
         if ($type == 'line') {
-            $dot = new dot();
+            $dot = new solid_dot();
             $dot->colour($colour)->tooltip($this->aTooltips[$idx]);
             $oSeries->set_default_dot_style($dot);
         } else {
@@ -277,7 +278,7 @@ class AP_Graph
                 if (!$max) {
                     $this->aData[$idx][$k] = 0;
                 } else {
-                    $oValue = new dot((float)$v / $max * $maxY * $scale);
+                    $oValue = new solid_dot((float)$v / $max * $maxY * $scale);
                     $oValue->tooltip(str_replace('#val#', $v, $this->aTooltips[$idx]));
                     $this->aData[$idx][$k] = $oValue;
                 }
