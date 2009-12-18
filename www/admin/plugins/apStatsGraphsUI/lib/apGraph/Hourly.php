@@ -6,6 +6,8 @@
  * @author Matteo Beccati
  * @copyright 2009 AdserverPlugins.com
  * @license http://creativecommons.org/licenses/by-nd/3.0/
+ *
+ * $Id$
  */
 
 class AP_Graph_Hourly extends AP_Graph
