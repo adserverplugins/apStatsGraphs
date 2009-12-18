@@ -76,7 +76,13 @@ class AP_Graph
         );
 
         if (empty($aEntityParams['entity'])) {
-            $aEntityParams['entity'] = 'global';
+            if (OA_Permission::isAccount(OA_ACCOUNT_ADVERTISER)) {
+                $aEntityParams['entity'] = 'advertiser';
+            } elseif (OA_Permission::isAccount(OA_ACCOUNT_TRAFFICKER)) {
+                $aEntityParams['entity'] = 'affiliate';
+            } else {
+                $aEntityParams['entity'] = 'global';
+            }
         }
 
         if ($aEntityParams['entity'] != 'global') {
