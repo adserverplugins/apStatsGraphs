@@ -31,22 +31,7 @@ phpAds_PageHeader($oGraph->getMenuIndex(), '', '../../');
     <?php open_flash_chart_object('800', 350, $oGraph->getUrl()); ?>
 
     <div style="text-align: center; margin: 8px 0; padding: 4px 32px; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-        <?php
-        $aLinks = $oGraph->getLinks();
-
-        if (!empty($aLinks['prev']))  {
-            echo '<a href="'.$aLinks['prev'].'" style="float: left">&lt; Prev</a>';
-        }
-        if (!empty($aLinks['next']))  {
-            echo '<a href="'.$aLinks['next'].'" style="float: right">Next &gt;</a>';
-        }
-        if (!empty($aLinks['up']))  {
-            echo '<a href="'.$aLinks['up'].'">Up</a>';
-        } else {
-            echo "&nbsp;";
-        }
-
-        ?>
+        <?php echo getButtons($oGraph->getLinks()); ?>
     </div>
     <div style="text-align: right; margin: 4px">
         This free plugin was created by the <a href="http://www.adserverplugins.com" target="_blank">AdServerPlugins.com</a> team
@@ -62,3 +47,24 @@ phpAds_PageHeader($oGraph->getMenuIndex(), '', '../../');
 
 // Display the OpenX page footer
 phpAds_PageFooter();
+
+
+function getButtons($aLinks) {
+    $aButtons = array(
+        'prev' => array('< Prev', 'left'),
+        'up'   => array('Up', 'none'),
+        'next' => array('Next >', 'right'),
+    );
+    $str = '';
+    foreach ($aButtons as $type => $aData) {
+        list($text, $float) = $aData;
+        $str .= '<button ';
+        if (!empty($aLinks[$type])) {
+            $str .= 'onclick="location.href=\''.$aLinks['up'].'\'" ';
+        } else {
+            $str .= 'disabled="disabled" ';
+        }
+        $str .= 'style="width: 6em; float: '.$float.'">'.htmlspecialchars($text).'</button>';
+    }
+    return $str;
+}

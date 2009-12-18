@@ -1,8 +1,17 @@
 <?php
 
+/**
+ * apStatsGraphs for the OpenX ad server (Free Version).
+ *
+ * @author Matteo Beccati
+ * @copyright 2009 AdserverPlugins.com
+ * @license http://creativecommons.org/licenses/by-nd/3.0/
+ */
+
 class AP_Graph_Monthly extends AP_Graph
 {
     protected $breakDown = 'month';
+    protected $drillDown = 'drill_down';
 
     static function factory($year, $aEntityParams)
     {
@@ -22,7 +31,7 @@ class AP_Graph_Monthly extends AP_Graph
     public function getJs()
     {
         return <<<EOF
-function drill_down(m)
+function {$this->drillDown}(m)
 {
         var y = '{$this->oStart->format('%Y')}';
 
@@ -74,13 +83,6 @@ EOF;
                 $this->aData[$j][] = null;
             }
         }
-    }
-
-    protected function getSeries($idx, $type, $colour)
-    {
-        $oSeries = parent::getSeries($idx, $type, $colour);
-        $oSeries->set_on_click('drill_down');
-        return $oSeries;
     }
 
     protected function getTitle()

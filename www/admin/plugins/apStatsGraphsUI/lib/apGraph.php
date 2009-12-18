@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * apStatsGraphs for the OpenX ad server (Free Version).
+ *
+ * @author Matteo Beccati
+ * @copyright 2009 AdserverPlugins.com
+ * @license http://creativecommons.org/licenses/by-nd/3.0/
+ */
+
 require_once MAX_PATH . '/lib/max/Admin/UI/Field/DaySpanField.php';
 require_once MAX_PATH . '/lib/OA/Admin/DaySpan.php';
 require_once MAX_PATH . '/lib/OA/Admin/Statistics/Factory.php';
@@ -280,6 +288,9 @@ class AP_Graph
                 } else {
                     $oValue = new solid_dot((float)$v / $max * $maxY * $scale);
                     $oValue->tooltip(str_replace('#val#', $v, $this->aTooltips[$idx]));
+                    if (!empty($this->drillDown)) {
+                        $oValue->on_click($this->drillDown);
+                    }
                     $this->aData[$idx][$k] = $oValue;
                 }
             }
@@ -331,6 +342,9 @@ class AP_Graph
             }
 
             $oSeries = $this->getSeries($k, $v['type'], $v['colour']);
+            if (!empty($this->drillDown)) {
+                $oSeries->set_on_click($this->drillDown);
+            }
             $oSeries->set_on_show($v['effect']);
             if ($y) {
                 $oSeries->attach_to_right_y_axis();
