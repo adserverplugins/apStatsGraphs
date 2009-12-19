@@ -62,7 +62,7 @@ function getButtons($aLinks) {
         list($text, $float) = $aData;
         $str .= '<button ';
         if (!empty($aLinks[$type])) {
-            $str .= 'onclick="location.href=\''.$aLinks['up'].'\'" ';
+            $str .= 'onclick="location.href=\''.$aLinks[$type].'\'" ';
         } else {
             $str .= 'disabled="disabled" ';
         }
