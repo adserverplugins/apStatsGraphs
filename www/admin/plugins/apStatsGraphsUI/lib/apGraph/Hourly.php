@@ -35,12 +35,24 @@ class AP_Graph_Hourly extends AP_Graph
         $oNow  = new Date();
         $aLinks = array();
         $baseUrl = parent::getUrl(false);
-        $aLinks['up'] = $this->appendToUrl($baseUrl, 'month='.$oDate->format('%Y-%m'));
+        $date = $oDate->format('%Y-%m');
+        $aLinks['up'] = array(
+            'label' => $date,
+            'url'   => $this->appendToUrl($baseUrl, 'month='.$date),
+        );
         $oDate->subtractSpan(new Date_Span('1-0-0-0'));
-        $aLinks['prev'] = $this->appendToUrl($baseUrl, 'day='.$oDate->format('%Y-%m-%d'));
+        $date = $oDate->format('%Y-%m-%d');
+        $aLinks['prev'] = array(
+            'label' => '< '.$date,
+            'url'   => $this->appendToUrl($baseUrl, 'day='.$date),
+        );
         $oDate->addSpan(new Date_Span('2-0-0-0'));
+        $date = $oDate->format('%Y-%m-%d');
+        $aLinks['next'] = array(
+            'label' => $date.' >',
+        );
         if ($oNow->after($oDate)) {
-            $aLinks['next'] = $this->appendToUrl($baseUrl, 'day='.$oDate->format('%Y-%m-%d'));
+            $aLinks['next']['url'] = $this->appendToUrl($baseUrl, 'day='.$date);
         }
 
         return $aLinks;

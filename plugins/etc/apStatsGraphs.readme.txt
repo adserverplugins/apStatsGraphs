@@ -3,8 +3,8 @@ apStatsGraphs
 =============
 OpenX Ad Server has on-screen reports that display the statistics for
 advertisers, campaigns, websites, and zones, and an overall report that shows
-"global history". This free plugin adds a new item to the Statistics section,
-that displays the global history statistics in the form of a drill-down graph.
+"global history". This free plugin adds new items to the Statistics section,
+that displays drill-down graphs for all the aforementioned screens.
 
 Licence
 =======
@@ -19,3 +19,28 @@ Exceptions
 This plugin includes code from Open Flash Chart 2, released under LGPL:
 
 http://teethgrinder.co.uk/open-flash-chart-2/
+
+Change Log
+==========
+
+v1.0.0
+    * Switched to Open Flash Chart 2
+    * More graphs are available:
+          o Global History
+          o Advertiser History
+          o Campaign History
+          o Banner History
+          o Website History
+          o Zone History
+    * Any account type can now access the graphs
+    * Impressions and clicks are now displayed as bar charts with independent axis
+    * CTR stats are displayed with a line chart
+    * Default view is now current month with daily breakdown
+    * Graphs are browsable up to monthly breakdown or down to hourly level
+    * Previous/next year/month/day buttons available
+
+v0.9.0-beta:
+    * First release
+    * Global history graph available for admin and manager accounts
+    * Shows last year daily impressions and clicks
+    * Uses the Google Visualization API

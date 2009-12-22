@@ -56,10 +56,16 @@ EOF;
         $aLinks = array();
         $baseUrl = parent::getUrl(false);
         $year = $oDate->getYear();
-        $aLinks['prev'] = $this->appendToUrl($baseUrl, 'year='.($year - 1));
+        $aLinks['prev'] = array(
+            'label' => '< '.($year - 1),
+            'url'   => $this->appendToUrl($baseUrl, 'year='.($year - 1)),
+        );
         $oDate->setYear($year + 1);
+        $aLinks['next'] = array(
+            'label' => ($year + 1).' >',
+        );
         if ($oNow->after($oDate)) {
-            $aLinks['next'] = $this->appendToUrl($baseUrl, 'year='.($year + 1));
+            $aLinks['next']['url'] = $this->appendToUrl($baseUrl, 'year='.($year + 1));
         }
 
         return $aLinks;

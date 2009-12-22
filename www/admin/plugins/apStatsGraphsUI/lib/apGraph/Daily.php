@@ -55,12 +55,24 @@ EOF;
         $oNow  = new Date();
         $aLinks = array();
         $baseUrl = parent::getUrl(false);
-        $aLinks['up'] = $this->appendToUrl($baseUrl, 'year='.$oDate->getYear());
+        $date = $oDate->getYear();
+        $aLinks['up'] = array(
+            'label' => $date,
+            'url'   => $this->appendToUrl($baseUrl, 'year='.$date),
+        );
         $oDate->subtractSpan(new Date_Span('1-0-0-0'));
-        $aLinks['prev'] = $this->appendToUrl($baseUrl, 'month='.$oDate->format('%Y-%m'));
+        $date = $oDate->format('%Y-%m');
+        $aLinks['prev'] = array(
+            'label' => '< '.$date,
+            'url'   => $this->appendToUrl($baseUrl, 'month='.$date),
+        );
         $oDate->addSpan(new Date_Span('34-0-0-0'));
+        $date = $oDate->format('%Y-%m');
+        $aLinks['next'] = array(
+            'label' => $date.' >'
+        );
         if ($oNow->after($oDate)) {
-            $aLinks['next'] = $this->appendToUrl($baseUrl, 'month='.$oDate->format('%Y-%m'));
+            $aLinks['next']['url'] = $this->appendToUrl($baseUrl, 'month='.$date);
         }
 
         return $aLinks;

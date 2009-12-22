@@ -61,12 +61,15 @@ function getButtons($aLinks) {
     foreach ($aButtons as $type => $aData) {
         list($text, $float) = $aData;
         $str .= '<button ';
-        if (!empty($aLinks[$type])) {
-            $str .= 'onclick="location.href=\''.$aLinks[$type].'\'" ';
+        if (!empty($aLinks[$type]['url'])) {
+            $str .= 'onclick="location.href=\''.htmlspecialchars($aLinks[$type]['url']).'\'" ';
         } else {
             $str .= 'disabled="disabled" ';
         }
-        $str .= 'style="width: 6em; float: '.$float.'">'.htmlspecialchars($text).'</button>';
+        if (!empty($aLinks[$type]['label'])) {
+            $text = $aLinks[$type]['label'];
+        }
+        $str .= 'style="float: '.$float.'">'.htmlspecialchars($text).'</button>';
     }
     return $str;
 }

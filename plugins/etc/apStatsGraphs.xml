@@ -3,7 +3,7 @@
 
 <plugin>
     <name>apStatsGraphs</name>
-    <creationDate>2009-11-02</creationDate>
+    <creationDate>2009-12-22</creationDate>
     <author>AdserverPlugins.com</author>
     <authorEmail>info@adserverplugins.com</authorEmail>
     <authorUrl>http://www.adserverplugins.com/openx/free-plugins-for-openx-ad-server/statistics-as-graphs/</authorUrl>
@@ -11,7 +11,7 @@
         <a href="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons Attribution-No Derivative Works 3.0 Unported</a>
     ]]></license>
     <description>Display OpenX statistics as graphs - Free Version</description>
-    <version>1.0.0-rc3</version>
+    <version>1.0.0</version>
     <oxversion>2.8.0</oxversion>
     <type>extension</type>
     <install>
