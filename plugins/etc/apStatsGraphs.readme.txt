@@ -23,6 +23,12 @@ http://teethgrinder.co.uk/open-flash-chart-2/
 Change Log
 ==========
 
+v1.0.1
+    * Fixed blank page when using PHP < 5.2, caused by a conflict with JSON
+      library already bundled in OpenX
+    * Fixed problem with very big numbers breaking OFC, as it currently cannot
+      deal with the scientific notation that is used by default by json_encode
+
 v1.0.0
     * Switched to Open Flash Chart 2
     * More graphs are available:
