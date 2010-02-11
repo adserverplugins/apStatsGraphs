@@ -83,9 +83,9 @@ function json_format($json)
     }
 
     // Fix scientific notation
-    $new_json = preg_match_callback(
-        '/(?<="value":\s*)([+-]?\d+\.\d+)[eE]([+-]?\d+)/',
-        create_function('$n', 'return sprintf("%.0F", $n);'),
+    $new_json = preg_replace_callback(
+        '/(?:"value":\s*)([+-]?\d+\.\d+[eE][+-]?\d+)/',
+        create_function('$n', 'return sprintf("%.0F", (double)$n[1]);'),
         $new_json
     );
 
