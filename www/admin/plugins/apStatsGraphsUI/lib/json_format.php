@@ -82,5 +82,12 @@ function json_format($json)
         }
     }
 
+    // Fix scientific notation
+    $new_json = preg_match_callback(
+        '/(?<="value":\s*)([+-]?\d+\.\d+)[eE]([+-]?\d+)/',
+        create_function('$n', 'return sprintf("%.0F", $n);'),
+        $new_json
+    );
+
     return $new_json;
 }
