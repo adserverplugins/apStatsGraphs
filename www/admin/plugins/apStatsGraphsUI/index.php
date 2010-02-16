@@ -54,8 +54,8 @@ phpAds_PageFooter();
 function getButtons($aLinks) {
     $aButtons = array(
         'prev' => array('< Prev', 'left'),
-        'up'   => array('Up', 'none'),
         'next' => array('Next >', 'right'),
+        'up'   => array('Up', 'none'),
     );
     $str = '';
     foreach ($aButtons as $type => $aData) {
@@ -69,7 +69,7 @@ function getButtons($aLinks) {
         if (!empty($aLinks[$type]['label'])) {
             $text = $aLinks[$type]['label'];
         }
-        $str .= 'style="float: '.$float.'">'.htmlspecialchars($text).'</button>';
+        $str .= 'style="width: 10em; float: '.$float.'">'.htmlspecialchars($text).'</button>';
     }
     return $str;
 }
