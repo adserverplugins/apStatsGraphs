@@ -18,8 +18,9 @@ require_once './lib/apGraph.php';
 // Limit access to logged in users
 OA_Permission::enforceAccount(OA_ACCOUNT_ADMIN, OA_ACCOUNT_MANAGER, OA_ACCOUNT_ADVERTISER, OA_ACCOUNT_TRAFFICKER);
 
-// No cache
-MAX_commonSetNoCacheHeaders();
+// Custom no cache - OFC seems to have issues with the standard OpenX headers
+MAX_header('Cache-Control: max-age=0');
+MAX_header('Expires: '. date('r'));
 
 $oGraph = AP_Graph::factory($_GET);
 
