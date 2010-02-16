@@ -28,6 +28,9 @@ v1.0.1
       library already bundled in OpenX
     * Fixed problem with very big numbers breaking OFC, as it currently cannot
       deal with the scientific notation that is used by default by json_encode
+    * Fixed problem with graphs not being displayed with IE and SSL under some
+      circumstances
+    * Fixed "Next" button appearing out of place with IE8
 
 v1.0.0
     * Switched to Open Flash Chart 2
