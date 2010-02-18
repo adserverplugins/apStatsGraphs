@@ -25,7 +25,6 @@
 
             <file path="{ADMINPATH}/">open-flash-chart.swf</file>
             <file path="{ADMINPATH}/js/">swfobject.js</file>
-            <file path="{ADMINPATH}/lib/">JSON.php</file>
             <file path="{ADMINPATH}/lib/">dot_base.php</file>
             <file path="{ADMINPATH}/lib/">json_format.php</file>
             <file path="{ADMINPATH}/lib/">ofc_area_base.php</file>
