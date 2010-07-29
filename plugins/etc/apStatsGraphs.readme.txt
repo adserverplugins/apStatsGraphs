@@ -23,6 +23,10 @@ http://teethgrinder.co.uk/open-flash-chart-2/
 Change Log
 ==========
 
+v1.0.2
+    * Properly fixed the issue with scientific notation: the previous fix was
+      generating a malformed JSON response.
+
 v1.0.1
     * Fixed compatibility issue with PHP < 5.2
     * Fixed problem with very big numbers breaking OFC, as it currently cannot
