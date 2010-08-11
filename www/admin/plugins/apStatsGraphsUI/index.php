@@ -14,6 +14,7 @@
 require_once '../../../../init.php';
 require_once '../../config.php';
 require_once './lib/apGraph.php';
+require_once MAX_PATH.'/lib/OA/Sync.php';
 
 // Limit access to logged in users
 OA_Permission::enforceAccount(OA_ACCOUNT_ADMIN, OA_ACCOUNT_MANAGER, OA_ACCOUNT_ADVERTISER, OA_ACCOUNT_TRAFFICKER);
@@ -26,6 +27,8 @@ $oGraph = AP_Graph::factory($_GET);
 // Display the OpenX page header
 phpAds_PageHeader($oGraph->getMenuIndex(), '', '../../');
 
+$version = OA_Sync::getConfigVersion(OA_Dal_ApplicationVariables::get('apStatsGraphsUI_version'));
+
 ?>
 
 <div style="width: 800px">
@@ -35,8 +38,23 @@ phpAds_PageHeader($oGraph->getMenuIndex(), '', '../../');
     <div style="text-align: center; margin: 8px 0; padding: 4px 32px; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
         <?php echo getButtons($oGraph->getLinks()); ?>
     </div>
-    <div style="text-align: right; margin: 4px">
-        This free plugin was created by the <a href="http://www.adserverplugins.com" target="_blank">AdServerPlugins.com</a> team
+    <div style="margin: 4px">
+        <script type='text/javascript'><!--//<![CDATA[
+var m3_u = (location.protocol=='https:'?'https://openx.adserverplugins.com/live/www/delivery/ajs.php':'http://openx.adserverplugins.com/live/www/delivery/ajs.php');
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+document.write ("?zoneid=1&version=<?php echo urlencode($version); ?>");
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+
+        //]]>--></script>
     </div>
 
 </div>
