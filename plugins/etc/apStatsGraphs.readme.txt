@@ -23,6 +23,9 @@ http://teethgrinder.co.uk/open-flash-chart-2/
 Change Log
 ==========
 
+v1.0.3
+    * Fixed OFC vulnerability reported at http://osvdb.org/59051
+
 v1.0.2
     * Properly fixed the issue with scientific notation: the previous fix was
       generating a malformed JSON response.

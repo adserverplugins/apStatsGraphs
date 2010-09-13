@@ -3,7 +3,7 @@
 
 <plugin>
     <name>apStatsGraphsUI</name>
-    <creationDate>2010-08-11</creationDate>
+    <creationDate>2010-09-13</creationDate>
     <author>AdserverPlugins.com</author>
     <authorEmail>info@adserverplugins.com</authorEmail>
     <authorUrl>http://www.adserverplugins.com/openx/free-plugins-for-openx-ad-server/statistics-as-graphs/</authorUrl>
@@ -11,7 +11,7 @@
         <a href="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons Attribution-No Derivative Works 3.0 Unported</a>
     ]]></license>
     <description>Display OpenX statistics as graphs - Free Version</description>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <oxversion>2.8.0</oxversion>
     <extends>admin</extends>
     <install>
@@ -57,7 +57,6 @@
             <file path="{ADMINPATH}/lib/">ofc_tags.php</file>
             <file path="{ADMINPATH}/lib/">ofc_title.php</file>
             <file path="{ADMINPATH}/lib/">ofc_tooltip.php</file>
-            <file path="{ADMINPATH}/lib/">ofc_upload_image.php</file>
             <file path="{ADMINPATH}/lib/">ofc_x_axis.php</file>
             <file path="{ADMINPATH}/lib/">ofc_x_axis_label.php</file>
             <file path="{ADMINPATH}/lib/">ofc_x_axis_labels.php</file>
