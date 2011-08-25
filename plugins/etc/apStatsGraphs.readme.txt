@@ -23,6 +23,14 @@ http://teethgrinder.co.uk/open-flash-chart-2/
 Change Log
 ==========
 
+v1.0.4
+    * Fixed OFC vulnerability reported at http://osvdb.org/59051 (again):
+      when upgrading from a previous version the affected file was left in
+      place by the OpenX plugin framework instead of being deleted,
+      effectively leaving the instance still vulnerable. This fix adds back
+      an empty file with the same name, to work around the aforementioned
+      OpenX bug.
+
 v1.0.3
     * Fixed OFC vulnerability reported at http://osvdb.org/59051
 
