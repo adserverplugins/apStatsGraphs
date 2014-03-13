@@ -1,10 +1,11 @@
 
 apStatsGraphs
 =============
-OpenX Ad Server has on-screen reports that display the statistics for
-advertisers, campaigns, websites, and zones, and an overall report that shows
-"global history". This free plugin adds new items to the Statistics section,
-that displays drill-down graphs for all the aforementioned screens.
+Revive Ad Server and OpenX Source have on-screen reports that display the
+statistics for advertisers, campaigns, websites, and zones, and an overall
+report that shows "global history". This free plugin adds new items to the
+Statistics section, that displays drill-down graphs for all the aforementioned
+screens.
 
 Licence
 =======
@@ -22,6 +23,9 @@ http://teethgrinder.co.uk/open-flash-chart-2/
 
 Change Log
 ==========
+
+v1.0.5
+    * Added compatibility with Revive Adserver 3.0.3
 
 v1.0.4
     * Fixed OFC vulnerability reported at http://osvdb.org/59051 (again):

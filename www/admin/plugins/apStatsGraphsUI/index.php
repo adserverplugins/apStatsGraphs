@@ -14,7 +14,6 @@
 require_once '../../../../init.php';
 require_once '../../config.php';
 require_once './lib/apGraph.php';
-require_once MAX_PATH.'/lib/OA/Sync.php';
 
 // Limit access to logged in users
 OA_Permission::enforceAccount(OA_ACCOUNT_ADMIN, OA_ACCOUNT_MANAGER, OA_ACCOUNT_ADVERTISER, OA_ACCOUNT_TRAFFICKER);
@@ -27,7 +26,17 @@ $oGraph = AP_Graph::factory($_GET);
 // Display the OpenX page header
 phpAds_PageHeader($oGraph->getMenuIndex(), '', '../../');
 
-$version = OA_Sync::getConfigVersion(OA_Dal_ApplicationVariables::get('apStatsGraphsUI_version'));
+
+function getPluginVersion()
+{
+    $version = OA_Dal_ApplicationVariables::get('apStatsGraphsUI_version');
+    if (class_exists('RV_Sync') || @include(MAX_PATH.'/lib/RV/Sync.php')) {
+        return RV_Sync::getConfigVersion($version);
+    }
+
+    require_once(MAX_PATH.'/lib/OA/Sync.php');
+    return OA_Sync::getConfigVersion($version);
+}
 
 ?>
 
@@ -44,7 +53,7 @@ var m3_u = (location.protocol=='https:'?'https://openx.adserverplugins.com/live/
 var m3_r = Math.floor(Math.random()*99999999999);
 if (!document.MAX_used) document.MAX_used = ',';
 document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
-document.write ("?zoneid=1&version=<?php echo urlencode($version); ?>");
+document.write ("?zoneid=1&version=<?php echo urlencode(getPluginVersion()); ?>");
 document.write ('&amp;cb=' + m3_r);
 if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
 document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
